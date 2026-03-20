@@ -1,0 +1,247 @@
+/* === CONFIGURAÇÕES GERAIS E RESET === */
+body {
+    margin: 0;
+    padding-top: 100px; /* Espaço para o header não cobrir o conteúdo */
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow-x: hidden; /* Evita rolagem horizontal indesejada */
+}
+
+/* === HEADER FIXO === */
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #ef5350; /* Vermelho característico */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 1000; /* Garante que fique à frente de todos os carrosséis */
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: white;
+}
+
+.header-content img {
+    width: 40px;
+    height: 40px;
+}
+
+.search-container {
+    margin-left: 30px;
+}
+
+#pokemon-search {
+    padding: 10px 15px;
+    border-radius: 20px;
+    border: none;
+    width: 250px;
+    outline: none;
+    font-size: 14px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Classe que o JS vai usar para esconder os carrosséis que não batem com a busca */
+.carrossel-escondido {
+    display: none !important;
+}
+
+/* === GRID DE CARROSSEIS (4 COLUNAS) === */
+.secao-carrosseis {
+    display: grid;
+    /* Cria 4 colunas de tamanhos iguais */
+    grid-template-columns: repeat(4, 1fr); 
+    /* Centraliza os carrosséis nas colunas */
+    justify-items: center; 
+    /* Espaço vertical entre linhas e horizontal entre colunas */
+    gap: 150px 40px; 
+    padding: 40px 60px 120px 60px;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Responsividade: Se a tela for pequena, reduz para 2 colunas ou 1 */
+@media (max-width: 1200px) {
+    .secao-carrosseis { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 600px) {
+    .secao-carrosseis { grid-template-columns: 1fr; }
+}
+
+/* === ESTRUTURA DO CARROSSEL === */
+.carrossel {
+    position: relative;
+    width: 220px;
+    height: 300px;
+    /* Cria a sensação de profundidade 3D */
+    perspective: 1000px;
+}
+
+/* === O CARD (SLIDE) === */
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    border: 2px solid #ddd;
+    
+    /* Transição suave para todas as propriedades calculadas pelo JS */
+    transition: transform 0.2s cubic-bezier(0.23, 1, 0.32, 1), 
+                opacity 0.2s cubic-bezier(0.23, 1, 0.32, 1), 
+                z-index 0s; 
+    
+    backface-visibility: hidden;
+}
+
+.slide img {
+    width: 80%;
+    height: auto;
+    object-fit: contain;
+}
+
+.slide p {
+    margin-top: 10px;
+    font-weight: bold;
+    color: #444;
+    font-size: 0.9em;
+    text-align: center;
+    padding: 0 5px;
+}
+
+/* === EFEITO ANTI-VÁCUO (TRANSIÇÃO) === */
+/* Esta classe é aplicada pelo JS no slide que está saindo da frente */
+.slide.saindo {
+    opacity: 0 !important;
+    /* Ele sobe e diminui levemente enquanto desaparece */
+    transform: scale(0.9) translateY(-20px) !important;
+    /* Mantém ele no topo da pilha visual durante o sumiço */
+    z-index: 150 !important; 
+    pointer-events: none;
+    transition: all 0.2s ease; /* Garante que o sumiço também seja rápido */
+}
+
+/* No seu style.css, localize ou adicione o estilo do span de tipo */
+.slide span {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.5); /* Fundo semi-transparente para destacar no gradiente */
+    border-radius: 10px;
+    font-size: 0.7em;
+    color: #444;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* === BOTÕES DE NAVEGAÇÃO === */
+.btn-prev, .btn-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #333;
+    color: white;
+    border: none;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    /* O z-index deve ser maior que o máximo dos slides (100) */
+    z-index: 200; 
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btn-prev:hover, .btn-next:hover {
+    background: #ef5350;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.btn-prev { left: -45px; }
+.btn-next { right: -45px; }
+
+/* === FEEDBACK DE CARREGAMENTO === */
+.loader {
+    grid-column: 1 / -1; /* Ocupa todas as colunas do grid */
+    text-align: center;
+    font-size: 1.2em;
+    color: #888;
+    margin-top: 50px;
+}
+
+footer {
+    background-color: #333;
+    color: white;
+    padding: 40px 20px 10px 20px;
+    margin-top: 50px;
+    font-size: 0.9em;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap; /* Ajusta para telas menores */
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 30px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+}
+
+.footer-section h3 {
+    color: #ef5350; /* Mesmo vermelho do header */
+    margin-bottom: 15px;
+    font-size: 1.1em;
+}
+
+.footer-section p {
+    line-height: 1.6;
+    color: #ccc;
+}
+
+.footer-section a {
+    color: #4db6ac;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-section a:hover {
+    text-decoration: underline;
+}
+
+.disclaimer {
+    font-size: 0.8em;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    color: #888;
+    font-size: 0.8em;
+}
+
+/* Ajuste para o container principal não grudar no footer */
+#pokedex-container {
+    min-height: calc(100vh - 400px); /* Garante que o footer não suba se tiver pouca busca */
+}

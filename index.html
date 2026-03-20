@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex Evolutiva Dinâmica</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/poke-ball.png" alt="Pokeball">
+            <h1>Minha Pokédex Ultra</h1>
+            
+            <div class="search-container">
+                <input type="text" id="pokemon-search" placeholder="Pesquisar família Pokémon...">
+            </div>
+        </div>
+    </header>
+
+    <main class="secao-carrosseis" id="pokedex-container">
+        <div class="loader">Carregando linhagens evolutivas...</div>
+    </main>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>Pokédex Ultra Pro</h3>
+            <p>Um projeto de estudo focado em API, Grid e manipulação de DOM.</p>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Créditos</h3>
+            <p>Dados e imagens fornecidos por <a href="https://pokeapi.co/" target="_blank">PokeAPI</a>.</p>
+        </div>
+        
+        <div class="footer-section">
+            <h3>Aviso Legal</h3>
+            <p class="disclaimer">
+                Este é um projeto não oficial e sem fins lucrativos. 
+                Pokémon e os nomes dos personagens são marcas registradas da 
+                Nintendo, Game Freak e Creatures Inc.
+            </p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        &copy; 2026 - Desenvolvido para fins educacionais.
+    </div>
+</footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
